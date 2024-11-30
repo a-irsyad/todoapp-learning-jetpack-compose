@@ -5,19 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="upsertTask_insertNewTask_newTaskAdded()">
+      <SelectionState runConfigName="observeAllTask_returnFlowOfAllLocalTasks()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="TaskDaoTest">
+      <SelectionState runConfigName="deleteTask_aTaskDeleted()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="upsertTask_updateTask_taskUpdated()">
+      <SelectionState runConfigName="deleteAllTask_allTaskDeleted()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="upsertAllTask_insertAllTasks_allTasksUpdated()">
+      <SelectionState runConfigName="deleteAllCompleted_allCompletedTaskDeleted()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="upsertAllTask_updateAllTasks_allTasksUpdated()">
+      <SelectionState runConfigName="updateCompleted_canChangeTaskCompletedStatus()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
