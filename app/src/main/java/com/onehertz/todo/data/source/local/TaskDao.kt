@@ -1,4 +1,4 @@
-package com.onehertz.todo.source.local
+package com.onehertz.todo.data.source.local
 
 import androidx.room.Dao
 import androidx.room.Query

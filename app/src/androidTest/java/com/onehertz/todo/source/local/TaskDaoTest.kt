@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.onehertz.todo.data.source.local.LocalTask
+import com.onehertz.todo.data.source.local.TaskDao
+import com.onehertz.todo.data.source.local.ToDoDatabase
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.runBlocking
 import org.junit.After
