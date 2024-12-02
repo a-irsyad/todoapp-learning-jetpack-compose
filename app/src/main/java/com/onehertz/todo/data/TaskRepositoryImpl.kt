@@ -1,6 +1,7 @@
 package com.onehertz.todo.data
 
 import com.onehertz.todo.data.source.local.TaskDao
+import com.onehertz.todo.data.source.network.NetworkDataSource
 import com.onehertz.todo.di.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -12,6 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class TaskRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao,
+    private val networkDataSource: NetworkDataSource,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher
 ) : TaskRepository {
     override fun getTasksStream(): Flow<List<Task>> {
@@ -23,23 +25,35 @@ class TaskRepositoryImpl @Inject constructor(
     }
 
     override fun getTaskStream(taskId: String): Flow<Task> {
-        TODO("continue from here")
+        return taskDao.observeTask(taskId).map { it.toTask() }
     }
 
     override suspend fun getTasks(forceUpdate: Boolean): List<Task> {
-        TODO("Not yet implemented")
+        if (forceUpdate) {
+            refresh()
+        }
+        return withContext(dispatcher) {
+            taskDao.getAllTasks().map { it.toTask() }
+        }
     }
 
     override suspend fun getTask(taskId: String, forceUpdate: Boolean): Task? {
-        TODO("Not yet implemented")
+        if (forceUpdate) {
+            refresh()
+        }
+        return taskDao.getTask(taskId)?.toTask()
     }
 
     override suspend fun refresh() {
-        TODO("Not yet implemented")
+        withContext(dispatcher) {
+            val networkTasks = networkDataSource.fetchTasks()
+            taskDao.deleteAllTasks()
+            taskDao.upsertAllTasks(networkTasks.toLocalTasks())
+        }
     }
 
     override suspend fun refreshTask() {
-        TODO("Not yet implemented")
+        TODO("continue from here")
     }
 
     override suspend fun createTask(title: String, description: String) {

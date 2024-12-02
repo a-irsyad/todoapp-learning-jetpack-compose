@@ -47,5 +47,7 @@ fun NetworkTask.toLocalTask() = LocalTask(
     isCompleted = (status == TaskStatus.COMPLETE)
 )
 
+fun List<NetworkTask>.toLocalTasks() = map(NetworkTask::toLocalTask)
+
 
 
