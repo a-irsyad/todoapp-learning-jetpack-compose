@@ -1,6 +1,5 @@
-package com.onehertz.todo.data.source
+package com.onehertz.todo.data
 
-import com.onehertz.todo.data.Task
 import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
