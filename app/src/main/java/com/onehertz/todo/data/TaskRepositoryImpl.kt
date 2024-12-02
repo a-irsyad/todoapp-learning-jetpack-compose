@@ -1,20 +1,29 @@
 package com.onehertz.todo.data
 
 import com.onehertz.todo.data.source.local.TaskDao
+import com.onehertz.todo.di.DefaultDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TaskRepositoryImpl @Inject constructor(
-    private val taskDao: TaskDao
+    private val taskDao: TaskDao,
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher
 ) : TaskRepository {
     override fun getTasksStream(): Flow<List<Task>> {
-        TODO("continue from here")
+        return taskDao.observeAllTasks().map {
+            withContext(dispatcher) {
+                it.toTasks()
+            }
+        }
     }
 
     override fun getTaskStream(taskId: String): Flow<Task> {
-        TODO("Not yet implemented")
+        TODO("continue from here")
     }
 
     override suspend fun getTasks(forceUpdate: Boolean): List<Task> {
