@@ -17,7 +17,7 @@ interface TaskDao {
     suspend fun getAllTasks(): List<LocalTask>
 
     @Query("SELECT * FROM task WHERE id=:taskId")
-    suspend fun getTask(taskId: String): LocalTask
+    suspend fun getTask(taskId: String): LocalTask?
 
     @Upsert
     suspend fun upsertTask(task: LocalTask)
