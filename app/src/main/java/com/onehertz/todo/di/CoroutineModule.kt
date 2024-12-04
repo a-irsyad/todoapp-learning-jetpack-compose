@@ -15,6 +15,7 @@ import javax.inject.Qualifier
 @Qualifier
 annotation class DefaultDispatcher
 
+
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class ApplicationScope
@@ -27,9 +28,11 @@ object CoroutineModule {
     @DefaultDispatcher
     fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
+
     @Provides
     @ApplicationScope
     fun provideApplicationScope(
         @DefaultDispatcher dispatcher: CoroutineDispatcher
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
+
 }

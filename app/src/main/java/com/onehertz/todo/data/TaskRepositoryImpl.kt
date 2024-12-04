@@ -19,8 +19,10 @@ import javax.inject.Singleton
 class TaskRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao,
     private val networkDataSource: NetworkDataSource,
+
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope
+
 ) : TaskRepository {
     override fun getTasksStream(): Flow<List<Task>> {
         return taskDao.observeAllTasks().map {
