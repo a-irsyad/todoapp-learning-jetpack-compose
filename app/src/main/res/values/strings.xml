@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ToDo</string>
+    <string name="all">All</string>
+    <string name="no_task">No tasks</string>
+    <string name="no_active_task">No active task</string>
+    <string name="active_task">Active</string>
+    <string name="completed_task">Completed</string>
+    <string name="no_completed_task">No completed task</string>
+    <string name="loading_tasks_error">Error occured while loading tasks</string>
+    <string name="completed_task_cleared">Completed task cleared</string>
+    <string name="task_marked_complete">Task Marked complete</string>
+    <string name="task_mark_active">Task marked active</string>
+    <string name="successfully_saved_task_message">"successfully saved task "</string>
+    <string name="successfully_added_task_message">successfully added task</string>
+    <string name="successfully_deleted_task_message">successfully deleted task</string>
+    <string name="open_drawer">Open drawer\n</string>
 </resources>
