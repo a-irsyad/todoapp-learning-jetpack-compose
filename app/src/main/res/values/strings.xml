@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ToDo</string>
+    <string name="all">All</string>
+    <string name="no_task">No tasks</string>
+    <string name="no_active_task">No active task</string>
+    <string name="active_task">Active</string>
+    <string name="completed_task">Completed</string>
+    <string name="no_completed_task">No completed task</string>
 </resources>
