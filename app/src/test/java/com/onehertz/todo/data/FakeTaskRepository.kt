@@ -11,7 +11,7 @@ import java.util.UUID
 
 class FakeTaskRepository : TaskRepository {
 
-    private val _savedTasks: MutableStateFlow<MutableList<Task>> = MutableStateFlow(mutableListOf())
+    private val _savedTasks: MutableStateFlow<List<Task>> = MutableStateFlow(emptyList())
     private val savedTask: StateFlow<List<Task>> = _savedTasks.asStateFlow()
     private var shouldThrowError = false
 
@@ -39,27 +39,58 @@ class FakeTaskRepository : TaskRepository {
     }
 
     override suspend fun updateTask(taskId: String, title: String, description: String) {
-        TODO("Not yet implemented")
+        _savedTasks.update { tasks ->
+            val index = tasks.indexOfFirst { it.id == taskId }
+            if (index == -1) {
+                tasks
+            } else {
+                tasks.toMutableList().apply {
+                    this[index] = this[index].copy(title = title, description = description)
+                }
+            }
+        }
     }
 
     override suspend fun completeTask(taskId: String) {
-        TODO("Not yet implemented")
+        _savedTasks.update { tasks ->
+            val index = tasks.indexOfFirst { it.id == taskId }
+            if (index == -1) {
+                tasks
+            } else {
+                tasks.toMutableList().apply {
+                    this[index] = this[index].copy(isCompleted = true)
+                }
+            }
+        }
     }
 
     override suspend fun activateTask(taskId: String) {
-        TODO("Not yet implemented")
+        _savedTasks.update { tasks ->
+            val index = tasks.indexOfFirst { it.id == taskId }
+            if (index == -1) {
+                tasks
+            } else {
+                tasks.toMutableList().apply {
+                    this[index] = this[index].copy(isCompleted = false)
+                }
+            }
+        }
     }
 
     override suspend fun clearCompletedTasks() {
-        TODO("Not yet implemented")
+        _savedTasks.update { tasks ->
+            tasks.filter { !it.isCompleted }
+        }
     }
 
     override suspend fun deleteAllTasks() {
-        TODO("Not yet implemented")
+        _savedTasks.update { emptyList() }
     }
 
     override suspend fun deleteTask(taskId: String) {
-        TODO("Not yet implemented")
+        _savedTasks.update { tasks ->
+            tasks.filter { it.id == taskId }
+        }
     }
 
 }
