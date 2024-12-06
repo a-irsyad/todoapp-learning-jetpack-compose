@@ -1,7 +1,7 @@
 package com.onehertz.todo.util
 
-sealed class Async<out T> {
-    object Loading : Async<Nothing>()
-    data class Error(val errorMessage: Int) : Async<Nothing>()
-    data class Success<out T>(val data: T) : Async<T>()
+sealed class Result<out T> {
+    object Loading : Result<Nothing>()
+    data class Error(val errorMessage: Int) : Result<Nothing>()
+    data class Success<out T>(val data: T) : Result<T>()
 }

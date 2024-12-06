@@ -6,4 +6,8 @@
     <string name="active_task">Active</string>
     <string name="completed_task">Completed</string>
     <string name="no_completed_task">No completed task</string>
+    <string name="loading_tasks_error">Error occured while loading tasks</string>
+    <string name="completed_task_cleared">Completed task cleared</string>
+    <string name="task_marked_complete">Task Marked complete</string>
+    <string name="task_mark_active">Task marked active</string>
 </resources>
