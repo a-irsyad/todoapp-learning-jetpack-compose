@@ -89,7 +89,7 @@ class TaskScreenViewModel @Inject constructor(
         _userMessage.value = null
     }
 
-    private fun refresh() {
+    fun refresh() {
         _isLoading.value = true
         viewModelScope.launch {
             taskRepository.refresh()

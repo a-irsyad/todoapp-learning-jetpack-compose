@@ -1,5 +1,6 @@
 package com.onehertz.todo.data
 
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -90,6 +91,13 @@ class FakeTaskRepository : TaskRepository {
     override suspend fun deleteTask(taskId: String) {
         _savedTasks.update { tasks ->
             tasks.filter { it.id == taskId }
+        }
+    }
+
+    @VisibleForTesting
+    fun addTasksForTesting(vararg tasks: Task){
+        _savedTasks.update{
+            it.toMutableList().apply { addAll(tasks) }
         }
     }
 
