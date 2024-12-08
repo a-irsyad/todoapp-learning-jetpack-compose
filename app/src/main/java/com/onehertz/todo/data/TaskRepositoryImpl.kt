@@ -32,7 +32,7 @@ class TaskRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getTaskStream(taskId: String): Flow<Task> {
+    override fun getTaskStream(taskId: String): Flow<Task?> {
         return taskDao.observeTask(taskId).map { it.toTask() }
     }
 
