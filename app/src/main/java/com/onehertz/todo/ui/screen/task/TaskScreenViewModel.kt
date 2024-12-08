@@ -6,6 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.onehertz.todo.R
 import com.onehertz.todo.data.Task
 import com.onehertz.todo.data.TaskRepository
+import com.onehertz.todo.ui.ADD_RESULT_OK
+import com.onehertz.todo.ui.DELETE_RESULT_OK
+import com.onehertz.todo.ui.EDIT_RESULT_OK
 import com.onehertz.todo.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -130,6 +133,14 @@ class TaskScreenViewModel @Inject constructor(
                     noTaskLabel = R.string.no_completed_task
                 )
             }
+        }
+    }
+
+    fun showEditResultMessage(result: Int){
+        when (result){
+            ADD_RESULT_OK -> showSnackBarMessage(R.string.successfully_added_task_message)
+            EDIT_RESULT_OK -> showSnackBarMessage(R.string.successfully_saved_task_message)
+            DELETE_RESULT_OK -> showSnackBarMessage(R.string.successfully_deleted_task_message)
         }
     }
 }

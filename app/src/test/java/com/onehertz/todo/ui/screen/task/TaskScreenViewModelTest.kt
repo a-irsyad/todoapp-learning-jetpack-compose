@@ -2,12 +2,15 @@ package com.onehertz.todo.ui.screen.task
 
 import androidx.lifecycle.SavedStateHandle
 import com.onehertz.todo.MainCoroutineRule
+import com.onehertz.todo.R
 import com.onehertz.todo.data.FakeTaskRepository
 import com.onehertz.todo.data.Task
+import com.onehertz.todo.ui.EDIT_RESULT_OK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -42,4 +45,39 @@ class TaskScreenViewModelTest {
         assertFalse(viewmodel.uiState.first().isLoading)
         assertEquals(viewmodel.uiState.first().tasks.size, 1)
     }
+
+    @Test
+    fun loadCompletedTasksFromRepositoryAndLoadIntoView() = runTest{
+        viewmodel.setTaskFilter(TaskFilterType.COMPLETED_TASK)
+        viewmodel.refresh()
+        assertFalse(viewmodel.uiState.first().isLoading)
+        assertEquals(viewmodel.uiState.first().tasks.size, 2)
+    }
+
+    @Test
+    fun loadTasks_error() = runTest{
+        fakeTaskRepository.setShouldThrowError(true)
+        viewmodel.refresh()
+        assertFalse(viewmodel.uiState.first().isLoading)
+        assertEquals(0, viewmodel.uiState.first().tasks.size)
+    }
+
+    @Test
+    fun clearCompletedTasks_clearsTasks() = runTest{
+        viewmodel.clearCompletedTasks()
+        val allTasks = viewmodel.uiState.first().tasks
+        val completedTasks = allTasks.filter{it.isCompleted}
+        val activeTask = allTasks.filter{!it.isCompleted}
+        assertTrue(completedTasks.isEmpty())
+        assertEquals(1, activeTask.size)
+        assertEquals(R.string.completed_task_cleared, viewmodel.uiState.first().userMessage)
+    }
+
+    @Test
+    fun showEditResultMessages_editOk_snackbarUpdated() = runTest{
+        viewmodel.showEditResultMessage(EDIT_RESULT_OK)
+        assertEquals(viewmodel.uiState.first().userMessage, R.string.successfully_saved_task_message)
+    }
+
+
 }

@@ -10,4 +10,7 @@
     <string name="completed_task_cleared">Completed task cleared</string>
     <string name="task_marked_complete">Task Marked complete</string>
     <string name="task_mark_active">Task marked active</string>
+    <string name="successfully_saved_task_message">"successfully saved task "</string>
+    <string name="successfully_added_task_message">successfully added task</string>
+    <string name="successfully_deleted_task_message">successfully deleted task</string>
 </resources>

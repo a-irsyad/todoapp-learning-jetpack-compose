@@ -30,7 +30,9 @@ class FakeTaskRepository : TaskRepository {
         if (shouldThrowError) throw Exception("Error") else savedTask.first()
             .find { it.id == taskId }
 
-    override suspend fun refresh() {}
+    override suspend fun refresh() {
+        if (shouldThrowError) _savedTasks.update { emptyList() }
+    }
 
     override suspend fun createTask(title: String, description: String): String {
         val taskId = UUID.randomUUID().toString()
@@ -99,6 +101,11 @@ class FakeTaskRepository : TaskRepository {
         _savedTasks.update{
             it.toMutableList().apply { addAll(tasks) }
         }
+    }
+
+    @VisibleForTesting
+    fun setShouldThrowError(throwError: Boolean){
+        shouldThrowError = throwError
     }
 
 }
