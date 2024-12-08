@@ -5,6 +5,8 @@ import com.onehertz.todo.MainCoroutineRule
 import com.onehertz.todo.R
 import com.onehertz.todo.data.FakeTaskRepository
 import com.onehertz.todo.data.Task
+import com.onehertz.todo.ui.ADD_RESULT_OK
+import com.onehertz.todo.ui.DELETE_RESULT_OK
 import com.onehertz.todo.ui.EDIT_RESULT_OK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -79,5 +81,33 @@ class TaskScreenViewModelTest {
         assertEquals(viewmodel.uiState.first().userMessage, R.string.successfully_saved_task_message)
     }
 
+    @Test
+    fun showEditResultMessages_deleteOK_snackbarUpdated() = runTest{
+        viewmodel.showEditResultMessage(DELETE_RESULT_OK)
+        assertEquals(viewmodel.uiState.first().userMessage, R.string.successfully_deleted_task_message)
+    }
 
+    @Test
+    fun showEditResultMessages_addOk_snackbarUpdated() = runTest{
+        viewmodel.showEditResultMessage(ADD_RESULT_OK)
+        assertEquals(viewmodel.uiState.first().userMessage, R.string.successfully_added_task_message)
+    }
+
+    @Test
+    fun completeTask_dataAndSnackBarUpdated() = runTest{
+        val task = Task("0", "title", "description")
+        fakeTaskRepository.addTasksForTesting(task)
+        viewmodel.completeTask(task, true)
+        assertTrue(fakeTaskRepository.getTask(task.id, false)?.isCompleted ?: false)
+        assertEquals(viewmodel.uiState.first().userMessage, R.string.task_marked_complete)
+    }
+
+    @Test
+    fun activateTask_dataAndSnackBarUpdated() = runTest{
+        val task = Task("0", "title", "description", true)
+        fakeTaskRepository.addTasksForTesting(task)
+        viewmodel.completeTask(task, false)
+        assertFalse(fakeTaskRepository.getTask(task.id, false)?.isCompleted ?: true)
+        assertEquals(viewmodel.uiState.first().userMessage, R.string.task_mark_active)
+    }
 }
