@@ -14,4 +14,12 @@
     <string name="successfully_added_task_message">successfully added task</string>
     <string name="successfully_deleted_task_message">successfully deleted task</string>
     <string name="open_drawer">Open drawer\n</string>
+    <string name="menu_filter">Filter tasks</string>
+    <string name="nav_all">All</string>
+    <string name="nav_active">Active</string>
+    <string name="nav_completed">Completed</string>
+    <string name="menu_more">More</string>
+    <string name="nav_clear_completed">Clear completed</string>
+    <string name="nav_refresh">Refresh</string>
+    <string name="add_task">Add task</string>
 </resources>
