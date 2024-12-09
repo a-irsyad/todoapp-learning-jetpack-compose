@@ -3,8 +3,11 @@ package com.onehertz.todo.ui.screen.task
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.Menu
@@ -18,6 +21,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,8 +36,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.onehertz.todo.R
+import com.onehertz.todo.data.Task
 import com.onehertz.todo.ui.theme.ToDoTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskScreen(
 
@@ -43,7 +52,13 @@ fun TaskScreen(
             }
         }
     ) { scaffoldPaddings ->
-        Text("Task Screen", modifier = Modifier.padding(scaffoldPaddings))
+        TasksContent(
+            isLoading = false,
+            tasks = emptyList(),
+            onRefresh = { },
+            scaffoldPaddings = scaffoldPaddings,
+            pullRefreshState = rememberPullToRefreshState()
+        )
     }
 }
 
@@ -141,6 +156,27 @@ private fun TopAppBarDropDownMenu(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TasksContent(
+    isLoading: Boolean,
+    tasks: List<Task>,
+    onRefresh: () -> Unit,
+    scaffoldPaddings: PaddingValues,
+    pullRefreshState: PullToRefreshState,
+    modifier: Modifier = Modifier
+){
+    PullToRefreshBox(
+        isRefreshing = isLoading,
+        onRefresh = onRefresh
+    ) {
+        if(tasks.isEmpty()){
+
+        }else{
+            Text("Task Screen", modifier = Modifier.padding(scaffoldPaddings))
+        }
+    }
+}
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
